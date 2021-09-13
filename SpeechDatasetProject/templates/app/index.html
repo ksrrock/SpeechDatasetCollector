@@ -45,7 +45,15 @@
           <br>
           <br>
         <br>
+       
+          {% for message in messages %}
+          <div class="container alert alert-success" role="alert">
+               <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          </div>
+        {% endfor %}
       
+        
+        <br>
             <div class="container jumbotron">
                 <h1 class="display-4">ASR Dataset Collection API </h1>
                 <p class="lead">This is a Web  simple interface build with django used for providing support for personalised speech dataset collection used in our current project of slurred speech recogntion.</p>
@@ -75,7 +83,7 @@
                       </div>
                       <div class="form-group">
                         <td><input  type="file" name="audio" required>
-                          <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+                          <button class="btn btn-primary" type="submit" value="Submit" >Submit</button>
                         </td>
                       </div>
                       
