@@ -9,14 +9,25 @@ def index(request):
         transcript=request.POST.get('transcript')
         print(transcript)
         audio=request.FILES.get('audio')
-        print(type(audio))
-        obj=Dataset.objects.get(transcript=transcript)
-        obj.audio=audio
-        obj.save()
-        messages.success(request, 'File upload successful')
-        return redirect('index')
-    data_list=Dataset.objects.all()
-    context={"data":data_list}
+        extension=str(audio.name)
+        if extension.endswith('flac')==False:
+            messages.error(request,'Invalid file format(Audio must of type .flac)')
+            return redirect('index')
+        else:
+            obj=Dataset.objects.get(transcript=transcript)
+            obj.audio=audio
+            obj.save()
+            messages.success(request, 'File upload successful')
+            return redirect('index')
+    data_list=Dataset.objects.all().order_by('id')
+    count=0
+    for item in data_list:
+        if item.audio:
+            pass
+        else:
+            count+=1
+   
+    context={"data":data_list, "count" : count}
     return render(request,"app/index.html",context=context)
 
 

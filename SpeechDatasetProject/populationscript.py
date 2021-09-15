@@ -4,13 +4,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SpeechDatasetProject.settings")
 import django
 django.setup()
 
-from django.core.management import call_command
-from essential_generators import DocumentGenerator
 from app.models import Dataset
-
+from essential_generators import DocumentGenerator
 gen=DocumentGenerator()
 
-N=10
+
 punc = '''!()-[]{};:-'"\,<>./?@#$%^&*_~'''
 def preprocess(s):
     for ele in s:
@@ -22,9 +20,21 @@ def preprocess(s):
     return result
         
 
-for i in range(N):
-    s=gen.sentence()
-    s=preprocess(s)
-    if len(s)>50:
-        data=Dataset(transcript=s)
-        data.save()
+def solve(N):
+    for i in range(N):
+        s=gen.sentence()
+        s=preprocess(s)
+        if len(s)>30 and len(s)<70:
+            data=Dataset(transcript=s)
+            data.save()
+
+# solve(10)
+dataset_list=Dataset.objects.all()
+
+for item in dataset_list:
+    item.transcript=item.transcript.lower()
+    item.save()
+
+for item in dataset_list:
+    if item.audio:
+        print(item.transcript)

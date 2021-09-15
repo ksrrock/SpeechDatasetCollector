@@ -61,7 +61,11 @@
                 <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
               </div>
        
-       
+              <div class="container">
+              <div class="alert alert-primary" role="alert">
+                  {{count}} Transcripts left
+                </div>
+              </div>
       
             <table class="table table-dark">
                 <thead>
@@ -75,19 +79,17 @@
                 {% for item in data %}
                 {% if not item.audio %}
                   <tr>
-                    <th scope="row">{{item.id}}</th>
+                    <th scope="row">{{ forloop.counter0 }}</th>
                     <form method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
                       <div class="form-group">
-                        <td width="60%"><input class="form-control" type="text" name="transcript"  value="{{item.transcript}}" readonly></td>
+                        <td width="65%"><input class="form-control" type="text" name="transcript"  value="{{item.transcript}}" readonly></td>
                       </div>
                       <div class="form-group">
                         <td><input  type="file" name="audio" required>
                           <button class="btn btn-primary" type="submit" value="Submit" >Submit</button>
                         </td>
-                      </div>
-                      
-                      
+                      </div>  
                     </form>
                   </tr>
                    {% endif %}
