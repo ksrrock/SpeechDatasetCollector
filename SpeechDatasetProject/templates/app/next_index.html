@@ -6,7 +6,6 @@
         <title>Speech Dataset</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     </head>
     <body>
@@ -63,11 +62,6 @@
               </div>
        
               <div class="container">
-                <a style="margin-left: 400px;" class="btn btn-primary" href="/secondindex"> Record next 200 Transcripts</a>
-              </div>
-              <br>
-              <br>
-              <div class="container">
               <div class="alert alert-primary" role="alert">
                   {{count}} Transcripts left
                 </div>
@@ -83,13 +77,13 @@
                 </thead>
                 <tbody>
                 {% for item in data %}
-                {% if not item.audio %}
+                {% if not item.1.audio %}
                   <tr>
-                    <th scope="row">{{ forloop.counter0 }}</th>
-                    <form method="POST" enctype="multipart/form-data">
+                    <th scope="row">{{ item.0 }}</th>
+                    <form action="{% url 'secondindex' %}" method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
                       <div class="form-group">
-                        <td width="65%"><input class="form-control" type="text" name="transcript"  value="{{item.transcript}}" readonly></td>
+                        <td width="65%"><input class="form-control" type="text" name="transcript"  value="{{ item.1.transcript }}" readonly></td>
                       </div>
                       <div class="form-group">
                         <td><input  type="file" name="audio" required>

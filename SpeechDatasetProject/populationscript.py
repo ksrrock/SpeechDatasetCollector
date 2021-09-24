@@ -28,7 +28,7 @@ def solve(N):
             data=Dataset(transcript=s)
             data.save()
 
-# solve(10)
+solve(200)
 dataset_list=Dataset.objects.all()
 
 for item in dataset_list:
